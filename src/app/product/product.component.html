@@ -1,0 +1,54 @@
+<input id="inputS" [(ngModel)] = "inputValue" type="text" (keydown.enter) = "buscar()">
+<a 
+    name="" 
+    id="" 
+    class="btn btn-primary" 
+    href="#" 
+    role="button"
+    (click)="buscar()"
+    >Buscar Producto
+</a>
+
+<p *ngIf = "inputValue.length > 0">Buscando: {{inputValue}}</p>
+
+<ul>
+    <li>
+        <input type="checkbox" class="form-check-input"
+        (input)="checkBoxValueExistencia=$event.target.checked"
+        (change) = "existencia()">
+        <label class="form-check-label">Solo en existencia</label>
+    </li>
+    <li>
+        <input type="checkbox" class="form-check-input"
+        (input)="checkBoxValueSort=$event.target.checked"
+         (change)="sort()">
+        <label class="form-check-label">Ordenar por precio (menor a mayor)</label>
+    </li>
+    <li>
+        <input type="checkbox" class="form-check-input"
+        (change)="cambiarBackground()">
+        <label class="form-check-label">Resaltar existencia mayor a 3</label>
+    </li>
+</ul>
+
+<table *ngIf = "productosFiltrados.length > 0" class="table">
+    <tr *ngFor = "let item of productosFiltrados; let i = index" 
+    [ngStyle]="{'background-color':productosFiltrados[i].bgColor==1?'green':'white'}">
+        <td><img src = "https://picsum.photos/id/{{item.uid}}/100/100 ">
+            
+        </td>
+
+        <td>
+            <p><strong>{{item.nombre}}</strong></p>
+            <p>Precio(MXN):${{item.precio}}</p>
+            <p>Marca:{{item.marca}}</p>
+            <p>Descripción:{{item.descripcion}}</p>
+            <p>Existencia:{{item.existencia}}</p>
+        </td>
+
+    </tr>
+</table>
+
+<div *ngIf="productosFiltrados.length == 0" class="alert alert-danger" role="alert">
+    No se encontraron productos
+</div>
